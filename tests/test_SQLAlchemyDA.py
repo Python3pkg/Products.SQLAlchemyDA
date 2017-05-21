@@ -54,8 +54,8 @@ class SQLAlchemyDATests(TestBase):
         metadata.bind = wrapper.engine
         metadata.create_all()
         session = wrapper.session
-        t1 = Test(id=1, utext=u'Hello world', text='hello world')
-        t2 = Test(id=2, utext=u'foo', text='far')
+        t1 = Test(id=1, utext='Hello world', text='hello world')
+        t2 = Test(id=2, utext='foo', text='far')
         session.add(t1)
         session.add(t2)
 
@@ -178,8 +178,8 @@ class SQLAlchemyDAFunctionalTests(TestBase, ZopeTestCase.FunctionalTestCase):
         self.assertEqual(len(rows), 0)
 
     def testORMInsertWithCommit(self):
-        t1 = Test(id=8, utext=u'Hello world', text='hello world')
-        t2 = Test(id=9, utext=u'foo', text='far')
+        t1 = Test(id=8, utext='Hello world', text='hello world')
+        t2 = Test(id=9, utext='foo', text='far')
         self.session.add(t1)
         self.session.add(t2)
         self.publish(self.folder_path)
@@ -187,8 +187,8 @@ class SQLAlchemyDAFunctionalTests(TestBase, ZopeTestCase.FunctionalTestCase):
         self.assertEqual(len(rows), 2)
 
     def testORMInsertWithRollback(self):
-        t1 = Test(id=8, utext=u'Hello world', text='hello world')
-        t2 = Test(id=9, utext=u'foo', text='far')
+        t1 = Test(id=8, utext='Hello world', text='hello world')
+        t2 = Test(id=9, utext='foo', text='far')
         self.session.add(t1)
         self.session.add(t2)
         transaction.abort()

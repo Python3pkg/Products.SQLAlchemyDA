@@ -300,7 +300,7 @@ class SAWrapper(SimpleItem, PropertyManager):
         if wrapper is not None:
             d = self.sa_zope_wrapper().__dict__.copy()
             d['DSN'] = self.sa_zope_wrapper().dsn
-            for k in d.keys()[:]:
+            for k in list(d.keys())[:]:
                 if k.startswith('_'):
                     del d[k]
             return d
@@ -316,7 +316,7 @@ class SAWrapper(SimpleItem, PropertyManager):
             dbapi = self.sa_zope_wrapper().engine.dialect.dbapi
 
             map = dict()
-            for name in types_mapping.keys():
+            for name in list(types_mapping.keys()):
                 type_obj = getattr(dbapi, name, None)
                 if type_obj:
                     if hasattr(type_obj, 'values'):
@@ -426,7 +426,7 @@ class SAWrapper(SimpleItem, PropertyManager):
                 msg = 'Database connection opened'
                 RESPONSE.redirect(self.absolute_url() +
                               '/manage_workspace?manage_tabs_message=%s' % msg)
-        except Exception, e:
+        except Exception as e:
             if RESPONSE:
                 msg = 'Database connection could not be opened (%s)' % e
                 RESPONSE.redirect(self.absolute_url() +
@@ -451,10 +451,10 @@ class SAWrapper(SimpleItem, PropertyManager):
     security.declareProtected(view_management_screens, 'manage_formatItem')
     def manage_formatItem(self, s):
         """ used by query form """
-        if isinstance(s, unicode):
+        if isinstance(s, str):
             return s
         if isinstance(s, str):
-            return unicode(s, self.encoding, 'ignore')
+            return str(s, self.encoding, 'ignore')
         return str(s)
 
     security.declareProtected(view_management_screens, 'getVersion')
